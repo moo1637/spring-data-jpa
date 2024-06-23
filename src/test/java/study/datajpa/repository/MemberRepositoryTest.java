@@ -34,6 +34,9 @@ class MemberRepositoryTest {
     @PersistenceContext
     EntityManager em;
 
+    @Autowired
+    MemberQueryRepository memberQueryRepository;
+
     @Test
     public void testMember() {
         Member member = new Member("memberA");
@@ -183,7 +186,7 @@ class MemberRepositoryTest {
         PageRequest pageRequest = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "username"));
 
         //when
-        Page<Member> page = memberRepository.findByAge(age,pageRequest );
+        Page<Member> page = memberRepository.findByAge(age, pageRequest);
 
         Page<MemberDto> toMap = page.map(m -> new MemberDto(m.getId(), m.getUsername(), null));
 
@@ -245,9 +248,9 @@ class MemberRepositoryTest {
         List<Member> members = memberRepository.findEntityGraphByUsername("member1");
 
         for (Member member : members) {
-             System.out.println("member = " + member.getUsername());
-             System.out.println("member.teamClass = " + member.getTeam().getClass());
-             System.out.println("member.team = " + member.getTeam().getName());
+            System.out.println("member = " + member.getUsername());
+            System.out.println("member.teamClass = " + member.getTeam().getClass());
+            System.out.println("member.team = " + member.getTeam().getName());
         }
     }
 
